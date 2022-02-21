@@ -499,6 +499,9 @@
     <ClInclude Include="pointer.h" />
     <ClInclude Include="structure.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cfg\pkodev.mod.enemy.cfg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

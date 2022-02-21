@@ -9,4 +9,7 @@
     <ClInclude Include="structure.h" />
     <ClInclude Include="hook.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cfg\pkodev.mod.enemy.cfg" />
+  </ItemGroup>
 </Project>
