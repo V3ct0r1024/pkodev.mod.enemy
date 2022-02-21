@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Game.exe 1.3x_0 Debug/pkodev.mod.enemy.tlog
+/temp
