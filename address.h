@@ -33,6 +33,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049ED60;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DB820;
         }
 
         // Game.exe 1 (1243412597)
@@ -64,6 +67,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049EE70;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DB930;
         }
 
         // Game.exe 2 (1252912474)
@@ -95,6 +101,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049EF10;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DBA00;
         } 
 
         // Game.exe 3 (1244511158)
@@ -126,6 +135,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049EF00;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DB9F0;
         }
 
         // Game.exe 4 (1585009030)
@@ -157,6 +169,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049F110;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DBBD0;
         }
 
         // Game.exe 5 (1207214236)
@@ -188,6 +203,9 @@ namespace pkodev
 
             // inline void CGuiPic::Render( int x, int y )	
             const unsigned int CGuiPic__Render = 0x0049EB60;
+
+            // bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+            const unsigned int CIsSkillUse__IsAttack = 0x004DB650;
         }
 	}
 }

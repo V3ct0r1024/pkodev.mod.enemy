@@ -35,6 +35,9 @@ namespace pkodev
 
     // Load mod settings from file
     void load_settings(const std::string& path, pkodev::stSettings& settings_);
+
+    // Check that players are friends or enemies
+    bool is_friend(const pkodev::stCharacter* me, const pkodev::stCharacter* other);
 }
 
 // Entry point
@@ -71,6 +74,7 @@ void Start(const char* path)
     DetourAttach(&(PVOID&)pkodev::pointer::CHeadSay__Render, pkodev::hook::CHeadSay__Render);
     DetourAttach(&(PVOID&)pkodev::pointer::NetSwitchMap, pkodev::hook::NetSwitchMap);
     DetourAttach(&(PVOID&)pkodev::pointer::CGameScene___RenderUI, pkodev::hook::CGameScene___RenderUI);
+    DetourAttach(&(PVOID&)pkodev::pointer::CIsSkillUse__IsAttack, pkodev::hook::CIsSkillUse__IsAttack);
     DetourTransactionCommit();
 }
 
@@ -83,6 +87,7 @@ void Stop()
     DetourDetach(&(PVOID&)pkodev::pointer::CHeadSay__Render, pkodev::hook::CHeadSay__Render);
     DetourDetach(&(PVOID&)pkodev::pointer::NetSwitchMap, pkodev::hook::NetSwitchMap);
     DetourDetach(&(PVOID&)pkodev::pointer::CGameScene___RenderUI, pkodev::hook::CGameScene___RenderUI);
+    DetourDetach(&(PVOID&)pkodev::pointer::CIsSkillUse__IsAttack, pkodev::hook::CIsSkillUse__IsAttack);
     DetourTransactionCommit();
 }
 
@@ -235,40 +240,40 @@ void pkodev::load_settings(const std::string& path, pkodev::stSettings& settings
     file.close();
 }
 
+// Check that players are friends or enemies
+bool pkodev::is_friend(const pkodev::stCharacter* me, const pkodev::stCharacter* other)
+{
+    // Compare characters ID
+    if (me->cha_id == other->cha_id)
+    {
+        return true; // Friends
+    }
+
+    // Check party
+    if (me->party_id != 0 && me->party_id == other->party_id)
+    {
+        return true;  // Friends
+    }
+
+    // Check guild
+    if (me->guild_id != 0 && me->guild_id == other->guild_id)
+    {
+        return true;  // Friends
+    }
+
+    // Side
+    if (me->side_id != 0 && me->side_id == other->side_id)
+    {
+        return true;  // Friends
+    }
+
+    // Enemies
+    return false;
+}
+
 // void CHeadSay::Render(D3DXVECTOR3& pos)
 void __fastcall pkodev::hook::CHeadSay__Render(void* This, void* NotUsed, void* Pos)
 {
-    // Check that players are friends or enemies
-    auto is_friend = [](const pkodev::stCharacter* me, const pkodev::stCharacter* other) -> bool
-    {
-        // Compare characters ID
-        if (me->cha_id == other->cha_id)
-        {
-            return true; // Friends
-        }
-
-        // Check party
-        if (me->party_id != 0 && me->party_id == other->party_id)
-        {
-            return true;  // Friends
-        }
-
-        // Check guild
-        if (me->guild_id != 0 && me->guild_id == other->guild_id)
-        {
-            return true;  // Friends
-        }
-
-        // Side
-        if (me->side_id != 0 && me->side_id == other->side_id)
-        {
-            return true;  // Friends
-        }
-
-        // Enemies
-        return false;
-    };
-
     // Get pointer to the player's character
     pkodev::stCharacter* pMainCha = reinterpret_cast<pkodev::stCharacter*>(
         *reinterpret_cast<unsigned int*>(pkodev::address::MOD_EXE_VERSION::CGameScene___pMainCha)
@@ -400,4 +405,30 @@ void __fastcall pkodev::hook::CGameScene___RenderUI(void* This, void* NotUsed)
         // Reset the enemies counter
         pkodev::enemies = 0;
     }
+}
+
+// bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+bool __fastcall pkodev::hook::CIsSkillUse__IsAttack(void* This, void* NotUsed,
+    void* pSkill, void* pSelf, void* pTarget)
+{
+    // Check that player is on the allowed map
+    if (pkodev::is_on_map == true)
+    {
+        // Get pointer to player's character
+        const pkodev::stCharacter* me =
+            reinterpret_cast<pkodev::stCharacter*>(pSelf);
+
+        // Get pointer to another character
+        const pkodev::stCharacter* other = 
+            reinterpret_cast<pkodev::stCharacter*>(pTarget);
+
+        // Get target type and map type
+        if ( (other->type == 1 && other->area_type != 0) && (me != other) )
+        {
+            return (pkodev::is_friend(me, other) == false);
+        }
+    }
+    
+    // Call the original function bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+    return pkodev::pointer::CIsSkillUse__IsAttack(This, pSkill, pSelf, pTarget);
 }

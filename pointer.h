@@ -33,5 +33,9 @@ namespace pkodev
 		// inline void CGuiPic::Render( int x, int y )
 		typedef void(__thiscall* CGuiPic__Render__Ptr)(void*, int, int, int);
 		CGuiPic__Render__Ptr CGuiPic__Render = (CGuiPic__Render__Ptr)(void*)(address::MOD_EXE_VERSION::CGuiPic__Render);
+		
+		// bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+		typedef bool(__thiscall* CIsSkillUse__IsAttack__Ptr)(void*, void*, void*, void*);
+		CIsSkillUse__IsAttack__Ptr CIsSkillUse__IsAttack = (CIsSkillUse__IsAttack__Ptr)(void*)(address::MOD_EXE_VERSION::CIsSkillUse__IsAttack);
 	}
 }

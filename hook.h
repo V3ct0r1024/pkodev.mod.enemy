@@ -13,5 +13,8 @@ namespace pkodev
 
 		// void CGameScene::_RenderUI()
 		void __fastcall CGameScene___RenderUI(void* This, void* NotUsed);
+
+		// bool CIsSkillUse::IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget )
+		bool __fastcall CIsSkillUse__IsAttack(void* This, void* NotUsed, void* pSkill, void* pSelf, void* pTarget);
 	}
 }
